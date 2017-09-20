@@ -5,16 +5,16 @@ package wiring
 //another nice cake pattern example : http://blog.originate.com/blog/2013/10/21/reader-monad-for-dependency-injection
 
 /**
- * 
+ *
  * Prod
  * - pure scala, nice usage of trait, type-checked at compile-time
- * 
+ *
  * Cons
  * - lots or boilerplate (unnecessary code)
  */
 
 object aca_CakePattern extends App {
-  val app = new Top with RealProcessorComponent
+  val app = new TheTop with RealProcessorComponent
   app.start()
 }
 
@@ -36,35 +36,35 @@ trait ProcessorComponent {
 // A Real Processor
 trait RealProcessorComponent extends ProcessorComponent {
   val processor = new ActualProcessor()
+
   class ActualProcessor() extends Processor {
     def process(): Unit = {
       println("ActualProcessor")
     }
   }
-
 }
 
 
 // A Test Processor
 trait TestProcessorComponent extends ProcessorComponent {
   val processor = new TestProcessor()
+
   class TestProcessor() extends Processor {
     def process(): Unit = {
       println("TestProcessor")
     }
   }
-
 }
 
 
-class Top {
+class TheTop {
 
   // NOTE : The self type that allows to
   // mixin and use a ProcessorComponent
   this: ProcessorComponent =>
 
   def start() {
-    processor.process()
+    processor.process() // since we know we have ProcessorComponent mixed-in, we can use processor
   }
 }
 

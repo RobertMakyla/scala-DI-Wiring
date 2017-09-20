@@ -1,1 +1,1 @@
-# scala-DI-Wiring
+# Scala Dependency Injection - Wiring 
